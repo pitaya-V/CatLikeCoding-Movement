@@ -11,6 +11,10 @@ public class MovingSphere : MonoBehaviour
 	float maxAcceleration = 10f;//加速度
     
     Vector3 velocity;//速率
+	Rigidbody body;
+	void Awake(){
+		body = GetComponent<Rigidbody>();
+	}
 
     // Update is called once per frame
     void Update()
@@ -33,31 +37,7 @@ public class MovingSphere : MonoBehaviour
 		velocity.z =
 			Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
 
-        //恒定的位移取消帧率对它的影响
-        Vector3 displacement = velocity * Time.deltaTime;
-        
-        
-#region 允许操控的面积和弹性的计算
-
-        Vector3 newPosition = transform.localPosition + displacement;
-		// if (newPosition.x < allowedArea.xMin) {
-		// 	newPosition.x = allowedArea.xMin;
-		// 	velocity.x = -velocity.x * bounciness;
-		// }
-		// else if (newPosition.x > allowedArea.xMax) {
-		// 	newPosition.x = allowedArea.xMax;
-		// 	velocity.x = -velocity.x * bounciness;
-		// }
-		// if (newPosition.z < allowedArea.yMin) {
-		// 	newPosition.z = allowedArea.yMin;
-		// 	velocity.z = -velocity.z * bounciness;
-		// }
-		// else if (newPosition.z > allowedArea.yMax) {
-		// 	newPosition.z = allowedArea.yMax;
-		// 	velocity.z = -velocity.z * bounciness;
-		// }
-#endregion
-        //赋值速度
-		transform.localPosition = newPosition;
+		body.velocity = velocity;
+    
     }
 }
